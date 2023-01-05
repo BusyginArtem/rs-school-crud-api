@@ -1,0 +1,9 @@
+{
+  "ignore": ["node_modules", "*.test.js"],
+  "watch": ["*.ts", "*.json"],
+  "ext": "ts",
+  "execMap": {
+    "ts": "ts-node"
+  },
+  "verbose": true
+}

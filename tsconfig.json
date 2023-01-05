@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2020",
+    "sourceMap": true,
+    "outDir": "build",
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "noImplicitAny": true,
+    "noEmitOnError": false,
+    "esModuleInterop": true
+  },
+  "ts-node": {
+    "esm": true,
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "webpack", "jest"]
+}
