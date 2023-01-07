@@ -6,19 +6,19 @@
   "scripts": {
     "start": "ts-node ./src/index.ts",
     "start:dev": "nodemon --config nodemon.json ./src/index.ts",
-    "build:one": "tsc src/index.ts",
     "build": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack",
-    "start:prod": "",
     "start:multi": "",
     "test": "",
     "prettier-format": "prettier --config pretierrc.config.js src/**/*.ts --write",
-    "eslint:fix": "eslint --fix"
+    "eslint:fix": "eslint --fix",
+    "start:prod": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack && node build/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^18.11.18",
+    "@types/uuid": "^9.0.0",
     "@types/webpack": "^5.28.0",
     "@types/webpack-node-externals": "^2.5.3",
     "@typescript-eslint/eslint-plugin": "^5.48.0",

@@ -6,4 +6,6 @@ module.exports = {
   bracketSpacing: true,
   useTabs: false,
   printWidth: 150,
+  arrowParens: "always",
+  endOfLine: "auto",
 };

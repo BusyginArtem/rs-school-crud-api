@@ -1,5 +1,14 @@
-const sum = (a: number, b: number): number => a + b;
-sum(4, 2);
-const now = new Date();
+import dotenv from "dotenv";
+import { createServer } from "http";
+import routing from "./routing";
 
-console.log(now.getDate());
+dotenv.config();
+const PORT = process.env.PORT || 4000;
+
+const server = createServer();
+
+server.on("request", routing);
+
+server.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});

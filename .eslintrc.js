@@ -4,6 +4,7 @@ module.exports = {
     jest: true,
     es2021: true,
   },
+  ignorePatterns: ["webpack.config.ts"],
   extends: [
     "eslint:recommended",
     "plugin:node/recommended",
@@ -27,5 +28,14 @@ module.exports = {
     "space-in-parens": "error",
     "no-multiple-empty-lines": "error",
     "prefer-const": "error",
+    "comma-dangle": ["error", "only-multiline"],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-var-reqiures": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/ban-ts-comment": "error",
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-unused-vars": "error",
   },
 };

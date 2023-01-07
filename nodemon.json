@@ -1,6 +1,6 @@
 {
   "ignore": ["node_modules", "*.test.js"],
-  "watch": ["*.ts", "*.json"],
+  "watch": ["src"],
   "ext": "ts",
   "execMap": {
     "ts": "ts-node"

@@ -4,7 +4,7 @@ import nodeExternals from "webpack-node-externals";
 
 const config: webpack.Configuration = {
   mode: "production",
-  target: "node",
+  externalsPresets: { node: true },
   externals: [nodeExternals()], // removes node_modules from your final bundle
   entry: "./src/index.ts", // make sure this matches the main root of your code
   output: {
