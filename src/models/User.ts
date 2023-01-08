@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { ID, IUser } from "../types";
 
-export const ALL_USERS: IUser[] = [
+export let ALL_USERS: IUser[] = [
   {
     id: uuidv4(),
     username: "Artem",
@@ -34,63 +34,47 @@ export const getUserById = (id: ID): IUser | null => {
   return null;
 };
 
-// export const getUserById = (userId: string): OperationResult => {
-//   const user = ALL_USERS.find((user) => user.id === userId);
+export const createUser = ({
+  username,
+  age,
+  hobbies,
+}: Omit<IUser, "id">): IUser => {
+  const newUser = {
+    id: uuidv4(),
+    username,
+    age,
+    hobbies,
+  };
 
-//   if (user) {
-//     return { isDone: true, statusCode: 200, data: user };
-//   } else {
-//     return { isDone: false, statusCode: 404, message: USER_DOES_NOT_EXIST };
-//   }
-// };
+  ALL_USERS.push(newUser);
 
-// export const createUser = (userData: Omit<User, "id">): OperationResult => {
-//   const validation = validateFields(userData);
+  return newUser;
+};
 
-//   if (validation.isDone) {
-//     const id = randomUUID();
-//     const { username, age, hobbies } = userData;
-//     const newUserData = { id, username, age, hobbies };
-//     ALL_USERS.push(newUserData);
+export const updateUser = (
+  user: IUser,
+  newUserData: Omit<IUser, "id">
+): IUser => {
+  const updatedUser = {
+    id: user.id,
+    username: newUserData.username ? newUserData.username : user.username,
+    age: newUserData.age ? newUserData.age : user.age,
+    hobbies: newUserData.hobbies ? newUserData.hobbies : user.hobbies,
+  };
 
-//     return { isDone: true, statusCode: 201, data: newUserData };
-//   }
-//   return { isDone: false, statusCode: 400, message: validation.message };
-// };
+  ALL_USERS = ALL_USERS.map((item) => {
+    if (item.id === user.id) {
+      return {
+        ...updatedUser,
+      };
+    }
 
-// export const updateUserById = (
-//   userId: string,
-//   newUserData: Omit<User, "id">
-// ): OperationResult => {
-//   const userIndex = ALL_USERS.findIndex((user) => user.id === userId);
+    return item;
+  });
 
-//   if (userIndex !== -1) {
-//     const validation = validateFields(newUserData);
+  return updatedUser;
+};
 
-//     if (validation.isDone) {
-//       const { username, age, hobbies } = newUserData;
-//       const updatedUserData = { id: userId, username, age, hobbies };
-//       ALL_USERS.splice(userIndex, 1, updatedUserData);
-
-//       return { isDone: true, statusCode: 200, data: updatedUserData };
-//     } else {
-//       return { isDone: false, statusCode: 400, message: validation.message };
-//     }
-//   }
-
-//   return { isDone: false, statusCode: 404, message: USER_DOES_NOT_EXIST };
-// };
-
-// export const removeUserById = (
-//   userId: string
-// ): Omit<GoodResult, "data"> | BadResult => {
-//   //TODO: check if id is valid
-//   const userIndex = ALL_USERS.findIndex((user) => user.id === userId);
-
-//   if (userIndex !== -1) {
-//     ALL_USERS.splice(userIndex, 1);
-//     return { isDone: true, statusCode: 204 };
-//   } else {
-//     return { isDone: false, statusCode: 404, message: USER_DOES_NOT_EXIST };
-//   }
-// };
+export const deleteUserById = (id: ID): void => {
+  ALL_USERS = ALL_USERS.filter((user) => user.id !== id);
+};

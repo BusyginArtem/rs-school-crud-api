@@ -1,44 +1,34 @@
 import { IncomingMessage, ServerResponse } from "http";
 //
-import { HTTP_CODES, HTTP_METHODS, IRoute, ROUTES } from "./types";
-import { getAllUsersController, getUserController } from "./controllers/users";
 import { NOT_FOUND_MESSAGE } from "./constants";
-
-const routes: IRoute[] = [
-  {
-    method: HTTP_METHODS["GET"],
-    pathname: ROUTES["USERS"],
-    controller: getAllUsersController,
-  },
-  {
-    method: HTTP_METHODS["GET"],
-    pathname: ROUTES["USER"],
-    controller: getUserController,
-  },
-];
+import writeAndSendJsonData from "./helpers/writeAndSendJsonData";
+import routes from "./routes";
 
 const routing = (req: IncomingMessage, res: ServerResponse) => {
+  let urlNotFound = true;
+
   for (const route of routes) {
-    const params = new RegExp(
+    let routeParams = {};
+
+    const reqParams = new RegExp(
       route.pathname.replace(":id", "(?<id>(.*))")
     ).exec(req.url);
 
     if (route.method !== req.method) continue;
-    if (route.pathname !== req.url && (!params || !params.groups)) continue;
-    console.log(params, "555555555555555");
+    if (route.pathname !== req.url && (!reqParams || !reqParams.groups))
+      continue;
 
-    route.controller(res, { id: params.groups.id });
+    if (reqParams?.groups) {
+      routeParams = { id: reqParams.groups.id };
+    }
 
-    return;
+    route.controller({ res, req, params: routeParams });
+    urlNotFound = false;
   }
 
-  const result = {
-    status: HTTP_CODES["NotFound"],
-    data: { message: NOT_FOUND_MESSAGE },
-  };
-
-  res.writeHead(HTTP_CODES["NotFound"]);
-  res.end(JSON.stringify(result));
+  if (urlNotFound) {
+    writeAndSendJsonData("NotFound", { message: NOT_FOUND_MESSAGE }, res);
+  }
 };
 
 export default routing;

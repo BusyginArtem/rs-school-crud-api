@@ -5,17 +5,20 @@ import nodeExternals from "webpack-node-externals";
 const config: webpack.Configuration = {
   mode: "production",
   externalsPresets: { node: true },
-  externals: [nodeExternals()], // removes node_modules from your final bundle
-  entry: "./src/index.ts", // make sure this matches the main root of your code
+  entry: "./src/index.ts",
+  externals: [nodeExternals()],
   output: {
     path: path.resolve(__dirname, "build"),
     filename: "index.js",
   },
+  resolve: {
+    extensions: [".ts", ".js"],
+  },
   module: {
-    rules: [{ test: /\.ts$/, use: { loader: "raw-loader" } }],
+    rules: [{ test: /\.ts$/, use: "ts-loader", exclude: /node_modules/ }],
   },
   optimization: {
-    minimize: false, // enabling this reduces file size and readability
+    minimize: false,
   },
 };
 
