@@ -12,3 +12,5 @@ server.on("request", routing);
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
+export default server;
