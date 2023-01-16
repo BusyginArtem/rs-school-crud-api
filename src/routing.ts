@@ -6,6 +6,7 @@ import routes from "./routes";
 
 const routing = (req: IncomingMessage, res: ServerResponse) => {
   let urlNotFound = true;
+  const requestStart = Date.now();
 
   for (const route of routes) {
     let routeParams = {};
@@ -29,6 +30,24 @@ const routing = (req: IncomingMessage, res: ServerResponse) => {
   if (urlNotFound) {
     writeAndSendJsonData("NotFound", { message: NOT_FOUND_MESSAGE }, res);
   }
+
+  res.on("finish", () => {
+    const { method, url } = req;
+    const { statusCode, statusMessage } = res;
+
+    console.log(`url ------------------------->`, url);
+    console.log(`method ------------------------->`, method);
+
+    console.log(
+      JSON.stringify({
+        processingTime: `${Date.now() - requestStart} ms`,
+        response: {
+          statusCode,
+          statusMessage,
+        },
+      })
+    );
+  });
 };
 
 export default routing;

@@ -7,8 +7,7 @@ import {
   createUser,
   updateUser,
   deleteUserById,
-} from "../models/User";
-
+} from "../models/Users";
 import getRequestData from "../helpers/getRequestData";
 import {
   writeAndSendJsonData,

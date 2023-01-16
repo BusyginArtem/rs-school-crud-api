@@ -59,3 +59,7 @@ export const updateUser = (
 export const deleteUserById = (id: ID): void => {
   ALL_USERS = ALL_USERS.filter((user) => user.id !== id);
 };
+
+export const setUsers = (users: IUser[]): void => {
+  ALL_USERS = users;
+};
